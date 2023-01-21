@@ -1,0 +1,108 @@
+from words import valids
+from words import game_words
+from words import easy
+
+#from analysis1 import findMatches
+
+removeIndices = []
+
+
+def removeYellows(
+    yellows, wordlist
+):  # check if a yellow is NOT in the word, then remove
+    index = 0
+    removeIndices = []
+    for word in wordlist:
+        for letter in yellows:
+            if letter not in word:
+                # remove word from wordlist
+                # wordlist.pop(index)
+                removeIndices.insert(0, index)
+                break
+        # print(removeIndices)
+        index += 1
+    wordlist = removeAllIndices(removeIndices, wordlist)
+    return wordlist
+
+
+def removeYellows2(
+    yellows, wordlist
+):  # check if there's a yellow would've been green, then remove
+    index = 0
+    removeIndices = []
+    for word in wordlist:
+        for y in yellows:
+            if word[y[1]] == y[0]:
+                removeIndices.insert(0, index)
+                break
+        index += 1
+    wordlist = removeAllIndices(removeIndices, wordlist)
+    return wordlist
+
+
+def removeGrays(
+    grays, wordlist
+):  # check if a gray exists in the word at all, then remove
+    index = 0
+    removeIndices = []
+    for word in wordlist:
+        for letter in grays:
+            if letter in word:
+                # print("popping ",index)
+                # wordlist.pop(index)
+                removeIndices.insert(0, index)
+                break
+        index += 1
+    # print(removeIndices)
+    wordlist = removeAllIndices(removeIndices, wordlist)
+    return wordlist
+
+
+def removeGreens(greens, wordlist):  # check if a green isn't where it should be
+    index = 0
+    removeIndices = []
+    for word in wordlist:
+        for g in greens:
+            if word[g[1]] != g[0]:
+                removeIndices.insert(0, index)
+                break
+        index += 1
+    wordlist = removeAllIndices(removeIndices, wordlist)
+    return wordlist
+
+
+def removeAllIndices(removeIndices, wordlist):
+    for index in removeIndices:
+        wordlist.pop(index)
+    return wordlist
+
+
+tester = ["lathe", "bathe", "later", "hater", "magni"]
+tester2 = ["lathe", "bathe", "later", "hater", "magni"]
+
+options = game_words
+
+guaranteedLetters = []
+while len(options) > 1:
+    print("Enter word guess")
+    word_guess = input()
+
+    print("Enter result (e = empty, g = green, y = yellow)")
+    result = input()
+
+    i = 0
+    for letter in result:
+        if letter == "e":
+            if word_guess[i] not in guaranteedLetters:
+                options = removeGrays([word_guess[i]],options)
+        elif letter == "y":
+            guaranteedLetters += word_guess[i]
+            options = removeYellows([word_guess[i]],options)       
+            options = removeYellows2([[word_guess[i],i]],options)          
+        elif letter == "g":
+            guaranteedLetters += word_guess[i]
+            options = removeGreens([[word_guess[i],i]],options)           
+        i += 1
+    print(options)
+
+#print(realtest)
