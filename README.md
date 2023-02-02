@@ -19,4 +19,4 @@ analysis1.py is a program to search through all possible Wordle words and genera
 
 Wordle uses a different word list for valid guesses and possible secret words. The word scores were calculated by comparing every word combination between the valid word list and possible secret words. 
 
-Gray letters (letter is not in the word) were assigned 0 points, yellow letters (letter is in the word but in the wrong place) were assigned 1 point, green letters (letter is in the word and in the right place) were assigned 2 points. 
+Gray letters (letter is not in the word) were assigned 0 points, yellow letters (letter is in the word but in the wrong place) were assigned 1 point, green letters (letter is in the word and in the right place) were assigned 2 points. The points are summed for each comparison and an average score is calcuated for each word.
