@@ -49,7 +49,7 @@ def calcAverage(searcher, word_list):
 
 
 def findMatches(word_list_source, word_list_reference):
-    averages = [[0, "xxxxx"]]
+    averages = []
     for word in word_list_source:
         temp = calcAverage(word, word_list_reference)
         averages.append([temp, word])
@@ -57,8 +57,10 @@ def findMatches(word_list_source, word_list_reference):
     return averages
 
 
-temp = findMatches(valids, game_words)
-print(temp[:10])
+if __name__ == "__main__":
+    temp = findMatches(valids, game_words)
+    print(temp[:10])
+
 
 # print(calcAverage("prams",valids))
 # findClosest("basic",game_words)

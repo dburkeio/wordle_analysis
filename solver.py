@@ -1,10 +1,22 @@
 from words import valids
 from words import game_words
 from words import easy
-
-#from analysis1 import findMatches
+from analysis1 import findMatches
 
 removeIndices = []
+
+
+class bcolors:
+    # https://stackoverflow.com/a/287944
+    HEADER = "\033[95m"
+    OKBLUE = "\033[94m"
+    OKCYAN = "\033[96m"
+    OKGREEN = "\033[92m"
+    WARNING = "\033[93m"
+    FAIL = "\033[91m"
+    ENDC = "\033[0m"
+    BOLD = "\033[1m"
+    UNDERLINE = "\033[4m"
 
 
 def removeYellows(
@@ -83,8 +95,11 @@ tester2 = ["lathe", "bathe", "later", "hater", "magni"]
 options = game_words
 
 guaranteedLetters = []
+suggestion = "soare"
 while len(options) > 1:
-    print("Enter word guess")
+    print(
+        f"Enter word guess (Hint: try using {bcolors.OKCYAN}{suggestion}{bcolors.ENDC})"
+    )
     word_guess = input()
 
     print("Enter result (e = empty, g = green, y = yellow)")
@@ -94,15 +109,21 @@ while len(options) > 1:
     for letter in result:
         if letter == "e":
             if word_guess[i] not in guaranteedLetters:
-                options = removeGrays([word_guess[i]],options)
+                options = removeGrays([word_guess[i]], options)
         elif letter == "y":
             guaranteedLetters += word_guess[i]
-            options = removeYellows([word_guess[i]],options)       
-            options = removeYellows2([[word_guess[i],i]],options)          
+            options = removeYellows([word_guess[i]], options)
+            options = removeYellows2([[word_guess[i], i]], options)
         elif letter == "g":
             guaranteedLetters += word_guess[i]
-            options = removeGreens([[word_guess[i],i]],options)           
+            options = removeGreens([[word_guess[i], i]], options)
         i += 1
-    print(options)
+    if len(options) == 0:
+        print("Something went wrong")
+    if len(options) > 1:
+        suggestion = findMatches(options, options)[0][1]
+        print(options)
+    elif len(options) == 1:
+        print(f"{bcolors.OKGREEN}{options[0]}{bcolors.ENDC}")
 
-#print(realtest)
+# print(realtest)
