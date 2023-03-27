@@ -105,11 +105,20 @@ while len(options) > 1:
     print("Enter result (e = empty, g = green, y = yellow)")
     result = input()
 
+    #pre processing loop to populate guaranteedLetters
+    #protects against case where a green letter is further in the word than a gray
+    i = 0
+    for letter in result:
+        if letter == 'g':
+            guaranteedLetters += word_guess[i]
+        i += 1
+
     i = 0
     for letter in result:
         if letter == "e":
             if word_guess[i] not in guaranteedLetters:
                 options = removeGrays([word_guess[i]], options)
+                print("removing grays for ", letter, " and ", word_guess[i])
         elif letter == "y":
             guaranteedLetters += word_guess[i]
             options = removeYellows([word_guess[i]], options)
