@@ -59,7 +59,10 @@ def findMatches(word_list_source, word_list_reference):
 
 if __name__ == "__main__":
     temp = findMatches(valids, game_words)
+    print("best words: ")
     print(temp[:10])
+    print("worst words: ")
+    print(temp[-10:])
 
 
 # print(calcAverage("prams",valids))
